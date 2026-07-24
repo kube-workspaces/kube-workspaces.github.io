@@ -8,7 +8,7 @@
   <meta property="og:title" content="Kube Workspaces" />
   <meta property="og:description" content="Cloud-native workspace platform for Kubernetes. Browser-based dev environments, optional OIDC auth, Helm/Kustomize/ArgoCD deploy." />
   <meta property="og:image" content="https://kube-workspaces.github.io/assets/logo.png" />
-  <meta property="og:url" content="https://kube-workspaces.github.io" />
+  <meta property="og:url" content="https://kubeworkspaces.io" />
   <meta name="twitter:card" content="summary" />
   <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
   <style>
@@ -682,7 +682,7 @@
   https://github.com/kube-workspaces/deploy/kustomize/base
 
 <span class="comment"># Port-forward the frontend</span>
-<span class="cmd">kubectl</span> port-forward svc/kube-workspaces-frontend 3000:3000 \
+<span class="cmd">kubectl</span> port-forward svc/kube-workspaces-frontend 3000:80 \
   -n kube-workspaces-system</pre>
     </div>
   </div>
@@ -793,24 +793,39 @@
         <td>8080</td>
       </tr>
       <tr>
-        <td><code>linuxserver/webtop:ubuntu-kde</code></td>
-        <td>Full Linux desktop (KasmVNC)</td>
+        <td><code>gitpod/openvscode-server:latest</code></td>
+        <td>Open VS Code Server</td>
+        <td>8080</td>
+      </tr>
+      <tr>
+        <td><code>flaccid/debian-desktop:latest</code></td>
+        <td>Full Linux desktop (noVNC)</td>
+        <td>6901</td>
+      </tr>
+      <tr>
+        <td><code>kasmweb/desktop:1.19.0</code></td>
+        <td>Ubuntu desktop (KasmVNC)</td>
+        <td>6901</td>
+      </tr>
+      <tr>
+        <td><code>kasmweb/chrome:1.19.0</code></td>
+        <td>Chrome browser (KasmVNC)</td>
+        <td>6901</td>
+      </tr>
+      <tr>
+        <td><code>linuxserver/firefox:latest</code></td>
+        <td>Firefox browser (KasmVNC)</td>
         <td>3000</td>
       </tr>
       <tr>
-        <td><code>jupyter/scipy-notebook:latest</code></td>
-        <td>Jupyter Notebook (SciPy stack)</td>
+        <td><code>jupyter/datascience-notebook:latest</code></td>
+        <td>Jupyter Notebook (Data Science)</td>
         <td>8888</td>
       </tr>
       <tr>
         <td><code>filebrowser/filebrowser:latest</code></td>
         <td>Web-based file manager</td>
         <td>8080</td>
-      </tr>
-      <tr>
-        <td><code>gitea/gitea:latest</code></td>
-        <td>Self-hosted Git service</td>
-        <td>3000</td>
       </tr>
     </tbody>
   </table>
