@@ -698,13 +698,17 @@
     <div class="code-block"><pre><span class="comment"># Create a local cluster</span>
 <span class="cmd">kind</span> create cluster
 
-<span class="comment"># Install CRDs</span>
+<span class="comment"># Install CRDs (--server-side is required: the Workspace CRD is ~658 KiB)</span>
 <span class="cmd">kubectl</span> apply <span class="flag">--server-side</span> -k \
   https://github.com/kube-workspaces/deploy/kustomize/crds
 
 <span class="comment"># Deploy all components</span>
 <span class="cmd">kubectl</span> apply <span class="flag">--server-side</span> -k \
   https://github.com/kube-workspaces/deploy/kustomize/base
+
+<span class="comment"># Install the workspace image catalog (otherwise it is empty)</span>
+<span class="cmd">kubectl</span> apply <span class="flag">--server-side</span> -f \
+  https://raw.githubusercontent.com/kube-workspaces/deploy/main/images.yaml
 
 <span class="comment"># Port-forward the frontend</span>
 <span class="cmd">kubectl</span> port-forward svc/kube-workspaces-frontend 3000:80 \
@@ -713,24 +717,41 @@
   </div>
 
   <div id="tab-kustomize" class="tab-content">
-    <div class="code-block"><pre><span class="cmd">kubectl</span> apply <span class="flag">--server-side</span> -k \
+    <div class="code-block"><pre><span class="comment"># CRDs first. --server-side is required: the Workspace CRD embeds a full</span>
+<span class="comment"># PodSpec and exceeds the 256 KiB client-side apply limit.</span>
+<span class="cmd">kubectl</span> apply <span class="flag">--server-side</span> -k \
   https://github.com/kube-workspaces/deploy/kustomize/crds
 
+<span class="comment"># Then the components</span>
 <span class="cmd">kubectl</span> apply <span class="flag">--server-side</span> -k \
-  https://github.com/kube-workspaces/deploy/kustomize/base</pre>
+  https://github.com/kube-workspaces/deploy/kustomize/base
+
+<span class="comment"># The image catalog is not part of the base — apply it separately</span>
+<span class="cmd">kubectl</span> apply <span class="flag">--server-side</span> -f \
+  https://raw.githubusercontent.com/kube-workspaces/deploy/main/images.yaml</pre>
     </div>
   </div>
 
   <div id="tab-helm" class="tab-content">
-    <div class="code-block"><pre><span class="cmd">helm</span> install kube-workspaces \
+    <div class="code-block"><pre><span class="comment"># The chart ships the CRDs and a starter catalog of 5 images</span>
+<span class="cmd">helm</span> install kube-workspaces \
   oci://ghcr.io/kube-workspaces/charts/kube-workspaces \
   <span class="flag">--namespace</span> kube-workspaces-system \
-  <span class="flag">--create-namespace</span></pre>
+  <span class="flag">--create-namespace</span>
+
+<span class="comment"># Optional: add the full catalog (38 images)</span>
+<span class="cmd">kubectl</span> apply <span class="flag">--server-side</span> -f \
+  https://raw.githubusercontent.com/kube-workspaces/deploy/main/images.yaml</pre>
     </div>
   </div>
 
   <div id="tab-argocd" class="tab-content">
-    <div class="code-block"><pre><span class="cmd">kubectl</span> apply -f \
+    <div class="code-block"><pre><span class="comment"># CRDs first — this Application uses Replace=true for the large CRD</span>
+<span class="cmd">kubectl</span> apply -f \
+  https://raw.githubusercontent.com/kube-workspaces/deploy/main/argocd/application-crds.yaml
+
+<span class="comment"># Then the components (ServerSideApply=true)</span>
+<span class="cmd">kubectl</span> apply -f \
   https://raw.githubusercontent.com/kube-workspaces/deploy/main/argocd/application.yaml</pre>
     </div>
   </div>
@@ -820,11 +841,11 @@
       <tr>
         <td><code>gitpod/openvscode-server:latest</code></td>
         <td>Open VS Code Server</td>
-        <td>8080</td>
+        <td>3000</td>
       </tr>
       <tr>
         <td><code>flaccid/debian-desktop:latest</code></td>
-        <td>Full Linux desktop (noVNC)</td>
+        <td>Full Linux desktop (TigerVNC)</td>
         <td>6901</td>
       </tr>
       <tr>
@@ -850,7 +871,7 @@
       <tr>
         <td><code>filebrowser/filebrowser:latest</code></td>
         <td>Web-based file manager</td>
-        <td>8080</td>
+        <td>80</td>
       </tr>
     </tbody>
   </table>
