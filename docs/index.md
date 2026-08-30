@@ -4,11 +4,6 @@ title: Documentation
 description: Setup, configuration, and operational guides for Kube Workspaces.
 ---
 
-Setup, configuration, and operational guides for deploying and running Kube
-Workspaces on your Kubernetes cluster. The source lives alongside the
-deployment manifests in the
-[deploy repository](https://github.com/kube-workspaces/deploy/tree/main/docs).
-
 {% if site.data.docs %}
   {% for group in site.data.docs %}
 <h2>{{ group.title }}</h2>
@@ -18,6 +13,7 @@ deployment manifests in the
         {% assign doc_slug = doc.path | split: '/' | last | remove: '.md' %}
         {% if doc_slug == slug %}
   <a class="docs-card" href="{{ doc.url }}">
+    <div class="docs-card-icon">{% include doc_icon.html slug=doc_slug %}</div>
     <h3>{{ doc.title | default: doc_slug }}</h3>
   </a>
         {% endif %}
@@ -44,6 +40,7 @@ deployment manifests in the
     {% for doc in unlisted %}
       {% assign doc_slug = doc.path | split: '/' | last | remove: '.md' %}
   <a class="docs-card" href="{{ doc.url }}">
+    <div class="docs-card-icon">{% include doc_icon.html slug=doc_slug %}</div>
     <h3>{{ doc.title | default: doc_slug }}</h3>
   </a>
     {% endfor %}
@@ -55,6 +52,7 @@ deployment manifests in the
   {% for doc in items %}
     {% assign doc_slug = doc.path | split: '/' | last | remove: '.md' %}
   <a class="docs-card" href="{{ doc.url }}">
+    <div class="docs-card-icon">{% include doc_icon.html slug=doc_slug %}</div>
     <h3>{{ doc.title | default: doc_slug }}</h3>
   </a>
   {% endfor %}
