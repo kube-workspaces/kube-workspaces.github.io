@@ -57,7 +57,7 @@
     ::selection { background: rgba(79,107,255,0.4); color: #fff; }
 
     /* NAV */
-    nav {
+    .site-nav {
       position: sticky;
       top: 0;
       z-index: 100;
@@ -621,7 +621,7 @@
     }
 
     @media (max-width: 640px) {
-      nav { padding: 0 1rem; }
+      .site-nav { padding: 0 1rem; }
       .nav-links { display: none; }
       .hero { padding: 3rem 1rem 2.5rem; }
       .arch-diagram { padding: 1rem; }
