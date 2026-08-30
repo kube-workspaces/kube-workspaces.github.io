@@ -631,7 +631,7 @@
     .docs-layout {
       display: flex;
       gap: 2.5rem;
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
       padding: 3rem 2rem 4.5rem;
       align-items: flex-start;
@@ -678,7 +678,7 @@
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 2.5rem 2.75rem;
-      max-width: 820px;
+      max-width: 1000px;
       position: relative;
       overflow: hidden;
     }
