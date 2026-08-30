@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% if page.title %}{{ page.title }} · {% endif %}Kube Workspaces</title>
+  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}Kube Workspaces documentation{% endif %}" />
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
+</head>
+<body>
+
+{% include nav.html %}
+
+<div class="docs-layout">
+  <aside class="docs-sidebar">
+    <div class="docs-sidebar-head">
+      <a href="/docs/" class="docs-home-link">Documentation</a>
+    </div>
+    <nav class="docs-nav">
+      {% assign items = site.docs | sort: 'title' %}
+      {% for doc in items %}
+        <a href="{{ doc.url }}" class="docs-nav-link{% if doc.url == page.url %} active{% endif %}">{{ doc.title | default: doc.name }}</a>
+      {% endfor %}
+    </nav>
+  </aside>
+  <main class="docs-content-wrap">
+    <article class="docs-content">
+      {{ content }}
+    </article>
+  </main>
+</div>
+
+{% include footer.html %}
+
+</body>
+</html>

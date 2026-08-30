@@ -1,0 +1,14 @@
+title: Kube Workspaces
+description: Browser-accessible development environments running as pods in your Kubernetes cluster. Open source, no database required.
+url: "https://kubeworkspaces.io"
+
+collections:
+  docs:
+    output: true
+    permalink: /docs/:name/
+
+defaults:
+  - scope:
+      path: _docs
+    values:
+      layout: docs

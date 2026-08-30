@@ -1,0 +1,91 @@
+name: Build and deploy site
+
+# Build the site with Jekyll and publish it to GitHub Pages.
+#
+# The docs pages are not committed here: they are pulled from the
+# kube-workspaces/deploy repo's docs/ folder at build time and staged into the
+# Jekyll `_docs` collection, keeping deploy/docs the single source of truth.
+#
+# Runs when:
+#   - this repo is pushed to
+#   - a manual workflow_dispatch
+#   - the deploy repo fires a repository_dispatch (docs-update) when docs/ changes
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  repository_dispatch:
+    types: [docs-update]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout website
+        uses: actions/checkout@v5
+
+      - name: Fetch deploy docs
+        uses: actions/checkout@v5
+        with:
+          repository: kube-workspaces/deploy
+          path: deploy-src
+          sparse-checkout: docs
+          filter: blob:none
+          fetch-depth: 1
+
+      - name: Stage docs into the Jekyll collection
+        run: |
+          set -euo pipefail
+          rm -rf _docs
+          mkdir -p _docs
+          cp -r deploy-src/docs/* _docs/
+          cd _docs
+          for f in *.md; do
+            title=$(sed -n 's/^# *//p' "$f" | head -n 1)
+            if [ -z "$title" ]; then
+              title="${f%.md}"
+            fi
+            tmp="$(mktemp)"
+            printf -- '---\ntitle: "%s"\n---\n' "$title" > "$tmp"
+            cat "$f" >> "$tmp"
+            mv "$tmp" "$f"
+          done
+          # The repo-relative SECURITY link would 404 on the site; point it at GitHub.
+          if [ -f security.md ]; then
+            sed -i 's|\.\./SECURITY\.md|https://github.com/kube-workspaces/deploy/blob/main/SECURITY.md|g' security.md
+          fi
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+
+      - name: Build with Jekyll
+        run: bundle exec jekyll build
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
