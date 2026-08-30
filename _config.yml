@@ -7,6 +7,14 @@ collections:
     output: true
     permalink: /docs/:name/
 
+plugins:
+  - jekyll-toc
+
+toc:
+  min_level: 2
+  max_level: 3
+  list_id: ''
+
 defaults:
   - scope:
       path: _docs

@@ -47,8 +47,13 @@ jobs:
         run: |
           set -euo pipefail
           rm -rf _docs
-          mkdir -p _docs
-          cp -r deploy-src/docs/* _docs/
+          mkdir -p _docs _data
+          if [ -f deploy-src/docs/nav.yml ]; then
+            cp deploy-src/docs/nav.yml _data/docs.yml
+          fi
+          # Everything except the nav definition becomes a collection document.
+          find deploy-src/docs -mindepth 1 -maxdepth 1 ! -name nav.yml \
+            -exec cp -r {} _docs/ \;
           cd _docs
           for f in *.md; do
             title=$(sed -n 's/^# *//p' "$f" | head -n 1)
@@ -56,7 +61,7 @@ jobs:
               title="${f%.md}"
             fi
             tmp="$(mktemp)"
-            printf -- '---\ntitle: "%s"\n---\n' "$title" > "$tmp"
+            printf -- '---\ntitle: "%s"\ntoc: true\n---\n' "$title" > "$tmp"
             cat "$f" >> "$tmp"
             mv "$tmp" "$f"
           done

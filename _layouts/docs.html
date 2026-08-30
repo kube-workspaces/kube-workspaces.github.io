@@ -21,15 +21,66 @@
       <a href="/docs/" class="docs-home-link">Documentation</a>
     </div>
     <nav class="docs-nav">
-      {% assign items = site.docs | sort: 'title' %}
-      {% for doc in items %}
-        <a href="{{ doc.url }}" class="docs-nav-link{% if doc.url == page.url %} active{% endif %}">{{ doc.title | default: doc.name }}</a>
-      {% endfor %}
+      {% if site.data.docs %}
+        {% for group in site.data.docs %}
+          <div class="docs-group">
+            <div class="docs-group-label">{{ group.title }}</div>
+            {% for slug in group.items %}
+              {% for doc in site.docs %}
+                {% assign doc_slug = doc.path | split: '/' | last | remove: '.md' %}
+                {% if doc_slug == slug %}
+                  <a href="{{ doc.url }}" class="docs-nav-link{% if doc.url == page.url %} active{% endif %}">{{ doc.title | default: doc_slug }}</a>
+                  {% if doc.url == page.url %}
+                    <div class="docs-section-nav">{{ content | toc_only }}</div>
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+            {% endfor %}
+          </div>
+        {% endfor %}
+        {% assign unlisted = '' | split: ',' %}
+        {% for doc in site.docs %}
+          {% assign doc_slug = doc.path | split: '/' | last | remove: '.md' %}
+          {% assign is_listed = false %}
+          {% for group in site.data.docs %}
+            {% for slug in group.items %}
+              {% if slug == doc_slug %}{% assign is_listed = true %}{% endif %}
+            {% endfor %}
+          {% endfor %}
+          {% unless is_listed %}
+            {% assign unlisted = unlisted | push: doc %}
+          {% endunless %}
+        {% endfor %}
+        {% if unlisted.size > 0 %}
+          <div class="docs-group">
+            <div class="docs-group-label">Other</div>
+            {% for doc in unlisted %}
+              {% assign doc_slug = doc.path | split: '/' | last | remove: '.md' %}
+              <a href="{{ doc.url }}" class="docs-nav-link{% if doc.url == page.url %} active{% endif %}">{{ doc.title | default: doc_slug }}</a>
+              {% if doc.url == page.url %}
+                <div class="docs-section-nav">{{ content | toc_only }}</div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% else %}
+        {% assign items = site.docs | sort: 'title' %}
+        {% for doc in items %}
+          {% assign doc_slug = doc.path | split: '/' | last | remove: '.md' %}
+          <a href="{{ doc.url }}" class="docs-nav-link{% if doc.url == page.url %} active{% endif %}">{{ doc.title | default: doc_slug }}</a>
+        {% endfor %}
+      {% endif %}
     </nav>
   </aside>
   <main class="docs-content-wrap">
     <article class="docs-content">
-      {{ content }}
+      {% if page.toc and content contains '<h2' %}
+        <div class="docs-on-this-page">
+          <span class="docs-on-this-page-label">On this page</span>
+          <div class="docs-on-this-page-nav">{{ content | toc_only }}</div>
+        </div>
+      {% endif %}
+      {{ content | inject_anchors }}
     </article>
   </main>
 </div>

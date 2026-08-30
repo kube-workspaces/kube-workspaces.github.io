@@ -826,6 +826,90 @@
     .docs-card h3 { font-size: 1rem; font-weight: 600; color: var(--accent-mid); margin-bottom: 0.4rem; }
     .docs-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
 
+    /* Docs groups + hierarchy */
+    .docs-group { display: flex; flex-direction: column; gap: 0.15rem; margin-bottom: 1.1rem; }
+
+    .docs-group-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--faint);
+      padding: 0 10px;
+      margin-bottom: 0.25rem;
+    }
+
+    /* Nested section ToC under the active doc in the sidebar */
+    .docs-section-nav {
+      border-left: 1px solid var(--border);
+      margin: 0.15rem 0 0.4rem;
+      padding-left: 12px;
+      margin-left: 12px;
+    }
+    .docs-section-nav .section-nav {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+    .docs-section-nav .section-nav ul { list-style: none; margin: 0.1rem 0 0.3rem 1rem; padding: 0; }
+    .docs-section-nav .section-nav li { margin: 0; }
+    .docs-section-nav .section-nav a {
+      display: block;
+      color: var(--faint);
+      font-size: 0.8rem;
+      text-decoration: none;
+      padding: 2px 6px;
+      border-radius: 6px;
+      transition: color 0.15s, background 0.15s;
+    }
+    .docs-section-nav .section-nav a:hover { color: var(--accent-mid); background: rgba(79,107,255,0.08); }
+
+    /* "On this page" box above the article content */
+    .docs-on-this-page {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.9rem 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .docs-on-this-page-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-mid);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .docs-on-this-page-nav .section-nav { list-style: none; margin: 0; padding: 0; }
+    .docs-on-this-page-nav .section-nav ul { list-style: none; margin: 0.15rem 0 0.3rem 1rem; padding: 0; }
+    .docs-on-this-page-nav .section-nav li { margin: 0; }
+    .docs-on-this-page-nav .section-nav a {
+      color: var(--text-2);
+      font-size: 0.85rem;
+      text-decoration: none;
+      border-bottom: 1px dashed transparent;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .docs-on-this-page-nav .section-nav a:hover { color: var(--accent-mid); border-bottom-color: var(--accent-mid); }
+
+    /* Anchored headings get a hover indicator */
+    .docs-content h2 a, .docs-content h3 a, .docs-content h4 a { border-bottom: none; }
+    .docs-content h2:hover a::before, .docs-content h3:hover a::before, .docs-content h4:hover a::before {
+      content: '#';
+      margin-left: -1.1em;
+      padding-right: 0.35em;
+      color: var(--accent-mid);
+      opacity: 0.6;
+    }
+
     @media (max-width: 900px) {
       .docs-layout { flex-direction: column; padding: 2rem 1rem 3rem; }
       .docs-sidebar { position: static; flex: none; width: 100%; }
