@@ -831,13 +831,17 @@
     .docs-group { display: flex; flex-direction: column; gap: 0.15rem; margin-bottom: 1.1rem; }
 
     .docs-group-label {
+      display: block;
       font-family: var(--font-head);
       font-size: 0.85rem;
       font-weight: 600;
       color: var(--text-2);
+      text-decoration: none;
       padding: 0;
       margin-bottom: 0.25rem;
+      transition: color 0.15s;
     }
+    a.docs-group-label:hover { color: var(--accent-mid); }
 
     /* Nested section ToC under the active doc in the sidebar */
     .docs-section-nav {

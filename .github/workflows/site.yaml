@@ -65,6 +65,10 @@ jobs:
             cat "$f" >> "$tmp"
             mv "$tmp" "$f"
           done
+          # Rewrite cross-document links (authentication.md, domains.md#foo)
+          # to their rendered website URLs so they work on the site as well as
+          # on GitHub. Repo-relative ../ links are handled below.
+          sed -E -i 's|\(([a-z0-9-]+)\.md(#[a-z0-9-]+)?\)|(/docs/\1/\2)|g' *.md
           # The repo-relative SECURITY link would 404 on the site; point it at GitHub.
           if [ -f security.md ]; then
             sed -i 's|\.\./SECURITY\.md|https://github.com/kube-workspaces/deploy/blob/main/SECURITY.md|g' security.md

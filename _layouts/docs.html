@@ -23,8 +23,23 @@
     <nav class="docs-nav">
       {% if site.data.docs %}
         {% for group in site.data.docs %}
+          {% assign first_doc = nil %}
+          {% for slug in group.items %}
+            {% if first_doc == nil %}
+              {% for doc in site.docs %}
+                {% assign doc_slug = doc.path | split: '/' | last | remove: '.md' %}
+                {% if doc_slug == slug %}
+                  {% assign first_doc = doc %}
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
           <div class="docs-group">
-            <div class="docs-group-label">{{ group.title }}</div>
+            {% if first_doc %}
+              <a href="{{ first_doc.url }}" class="docs-group-label">{{ group.title }}</a>
+            {% else %}
+              <div class="docs-group-label">{{ group.title }}</div>
+            {% endif %}
             {% for slug in group.items %}
               {% for doc in site.docs %}
                 {% assign doc_slug = doc.path | split: '/' | last | remove: '.md' %}
@@ -53,7 +68,8 @@
         {% endfor %}
         {% if unlisted.size > 0 %}
           <div class="docs-group">
-            <div class="docs-group-label">Other</div>
+            {% assign first_unlisted = unlisted[0] %}
+            <a href="{{ first_unlisted.url }}" class="docs-group-label">Other</a>
             {% for doc in unlisted %}
               {% assign doc_slug = doc.path | split: '/' | last | remove: '.md' %}
               <a href="{{ doc.url }}" class="docs-nav-link{% if doc.url == page.url %} active{% endif %}">{{ doc.title | default: doc_slug }}</a>
