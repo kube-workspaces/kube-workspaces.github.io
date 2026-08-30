@@ -842,6 +842,7 @@
       transition: color 0.15s;
     }
     a.docs-group-label:hover { color: var(--accent-mid); }
+    .docs-group-label.active { color: var(--accent-mid); }
 
     /* Nested section ToC under the active doc in the sidebar */
     .docs-section-nav {
