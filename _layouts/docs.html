@@ -74,12 +74,6 @@
   </aside>
   <main class="docs-content-wrap">
     <article class="docs-content">
-      {% if page.toc and content contains '<h2' %}
-        <div class="docs-on-this-page">
-          <span class="docs-on-this-page-label">On this page</span>
-          <div class="docs-on-this-page-nav">{{ content | toc_only }}</div>
-        </div>
-      {% endif %}
       {{ content | inject_anchors }}
     </article>
   </main>

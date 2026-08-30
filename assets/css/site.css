@@ -831,12 +831,10 @@
     .docs-group { display: flex; flex-direction: column; gap: 0.15rem; margin-bottom: 1.1rem; }
 
     .docs-group-label {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
+      font-family: var(--font-head);
+      font-size: 0.85rem;
       font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--faint);
+      color: var(--text-2);
       padding: 0;
       margin-bottom: 0.25rem;
     }
@@ -868,38 +866,6 @@
       transition: color 0.15s, background 0.15s;
     }
     .docs-section-nav .section-nav a:hover { color: var(--accent-mid); background: rgba(79,107,255,0.08); }
-
-    /* "On this page" box above the article content */
-    .docs-on-this-page {
-      background: rgba(255,255,255,0.02);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 0.9rem 1.25rem;
-      margin-bottom: 2rem;
-    }
-
-    .docs-on-this-page-label {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent-mid);
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-
-    .docs-on-this-page-nav .section-nav { list-style: none; margin: 0; padding: 0; }
-    .docs-on-this-page-nav .section-nav ul { list-style: none; margin: 0.15rem 0 0.3rem 1rem; padding: 0; }
-    .docs-on-this-page-nav .section-nav li { margin: 0; }
-    .docs-on-this-page-nav .section-nav a {
-      color: var(--text-2);
-      font-size: 0.85rem;
-      text-decoration: none;
-      border-bottom: 1px dashed transparent;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .docs-on-this-page-nav .section-nav a:hover { color: var(--accent-mid); border-bottom-color: var(--accent-mid); }
 
     /* Anchored headings get a hover indicator */
     .docs-content h2 a, .docs-content h3 a, .docs-content h4 a { border-bottom: none; }
