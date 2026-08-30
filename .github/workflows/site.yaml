@@ -73,6 +73,16 @@ jobs:
           if [ -f security.md ]; then
             sed -i 's|\.\./SECURITY\.md|https://github.com/kube-workspaces/deploy/blob/main/SECURITY.md|g' security.md
           fi
+          cd ..
+          # Diagrams: stage any doc SVG into the site assets and point image
+          # links at the rendered URL (works on GitHub and on the site).
+          if [ -n "$(find _docs -maxdepth 1 -name '*.svg')" ]; then
+            mkdir -p assets/docs
+            find _docs -maxdepth 1 -name '*.svg' -exec cp {} assets/docs/ \;
+            cd _docs
+            sed -E -i 's|\(([a-z0-9-]+)\.svg\)|(/assets/docs/\1.svg)|g' *.md
+            cd ..
+          fi
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
