@@ -19,7 +19,6 @@ deployment manifests in the
         {% if doc_slug == slug %}
   <a class="docs-card" href="{{ doc.url }}">
     <h3>{{ doc.title | default: doc_slug }}</h3>
-    <p>{{ doc.excerpt | strip_html | default: 'Guide' }}</p>
   </a>
         {% endif %}
       {% endfor %}
@@ -46,7 +45,6 @@ deployment manifests in the
       {% assign doc_slug = doc.path | split: '/' | last | remove: '.md' %}
   <a class="docs-card" href="{{ doc.url }}">
     <h3>{{ doc.title | default: doc_slug }}</h3>
-    <p>{{ doc.excerpt | strip_html | default: 'Guide' }}</p>
   </a>
     {% endfor %}
 </div>
@@ -58,7 +56,6 @@ deployment manifests in the
     {% assign doc_slug = doc.path | split: '/' | last | remove: '.md' %}
   <a class="docs-card" href="{{ doc.url }}">
     <h3>{{ doc.title | default: doc_slug }}</h3>
-    <p>{{ doc.excerpt | strip_html | default: 'Guide' }}</p>
   </a>
   {% endfor %}
 </div>
