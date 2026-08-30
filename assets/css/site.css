@@ -660,10 +660,11 @@
     .docs-nav { display: flex; flex-direction: column; gap: 0.15rem; }
 
     .docs-nav-link {
+      display: block;
       color: var(--muted);
       font-size: 0.9rem;
       text-decoration: none;
-      padding: 6px 10px;
+      padding: 6px 0;
       border-radius: 8px;
       transition: color 0.15s, background 0.15s;
     }
@@ -836,7 +837,7 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--faint);
-      padding: 0 10px;
+      padding: 0;
       margin-bottom: 0.25rem;
     }
 
