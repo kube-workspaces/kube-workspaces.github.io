@@ -31,8 +31,9 @@
   </a>
   <h1>Browser-accessible workspaces<br>on <span>Kubernetes</span></h1>
   <p>
-    Kube Workspaces runs development environments as pods in your cluster —
-    with a web UI, optional OIDC auth, reverse proxy, and no database required.
+    Kube Workspaces runs development environments as containers or full VMs in
+    your cluster — with a web UI, optional OIDC auth, reverse proxy, and no
+    database required.
   </p>
   <div class="hero-actions">
     <a href="#quickstart" class="btn btn-primary">
@@ -242,6 +243,14 @@
 
       <div class="feature-card">
         <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25z"/></svg>
+        </div>
+        <h3>Virtual Machine Workspaces</h3>
+        <p>Run full VMs (KubeVirt) alongside containers. Persistent DataVolume root disks, serial console, web SSH, and a noVNC graphical display with fluid window-driven resize.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
         </div>
         <h3>Optional OIDC Auth</h3>
@@ -356,13 +365,13 @@
   </div>
 
   <div id="tab-helm" class="tab-content">
-    <div class="code-block"><pre><span class="comment"># The chart ships the CRDs and a starter catalog of 5 images</span>
+    <div class="code-block"><pre><span class="comment"># The chart ships the CRDs and a starter catalog of 8 images</span>
 <span class="cmd">helm</span> install kube-workspaces \
   oci://ghcr.io/kube-workspaces/charts/kube-workspaces \
   <span class="flag">--namespace</span> kube-workspaces-system \
   <span class="flag">--create-namespace</span>
 
-<span class="comment"># Optional: add the full catalog (38 images)</span>
+<span class="comment"># Optional: add the full catalog (41 images)</span>
 <span class="cmd">kubectl</span> apply <span class="flag">--server-side</span> -f \
   https://raw.githubusercontent.com/kube-workspaces/deploy/main/images.yaml</pre>
     </div>
@@ -465,12 +474,13 @@
 <section class="images-section">
   <span class="section-label" style="display:block;text-align:center;">Workspace Images</span>
   <h2>Available Images</h2>
-  <p>Any container image that serves HTTP works. These are tested and ready to use — the full <a href="https://github.com/kube-workspaces/image-catalog" style="color:var(--accent-mid);">image catalog</a> lives in its own repository.</p>
+  <p>Containers and full VMs (KubeVirt) both work. These are tested and ready to use — the full <a href="https://github.com/kube-workspaces/image-catalog" style="color:var(--accent-mid);">image catalog</a> lives in its own repository.</p>
   <table class="images-table">
     <thead>
       <tr>
         <th>Image</th>
         <th>Description</th>
+        <th>Type</th>
         <th>Port</th>
       </tr>
     </thead>
@@ -478,41 +488,67 @@
       <tr>
         <td><a href="https://github.com/kube-workspaces/image-catalog/blob/main/images/code-server.yaml"><code>codercom/code-server:latest</code></a></td>
         <td>Browser-based VS Code</td>
+        <td>container</td>
         <td>8080</td>
       </tr>
       <tr>
-        <td><a href="https://github.com/kube-workspaces/image-catalog/blob/main/images/openvscode-server.yaml"><code>gitpod/openvscode-server:latest</code></a></td>
-        <td>Open VS Code Server</td>
-        <td>3000</td>
+        <td><a href="https://github.com/kube-workspaces/image-catalog/blob/main/images/debian-xfce.yaml"><code>quay.io/containerdisks/debian:13</code></a></td>
+        <td>Debian Desktop XFCE (GUI, persistent, fluid resize)</td>
+        <td>vm</td>
+        <td>22</td>
+      </tr>
+      <tr>
+        <td><a href="https://github.com/kube-workspaces/image-catalog/blob/main/images/alpine-vm.yaml"><code>quay.io/kubevirt/alpine-container-disk-demo</code></a></td>
+        <td>Alpine Linux VM (serial console)</td>
+        <td>vm</td>
+        <td>22</td>
+      </tr>
+      <tr>
+        <td><a href="https://github.com/kube-workspaces/image-catalog/blob/main/images/debian-vm.yaml"><code>quay.io/containerdisks/debian:12</code></a></td>
+        <td>Debian VM (serial console)</td>
+        <td>vm</td>
+        <td>22</td>
       </tr>
       <tr>
         <td><a href="https://github.com/kube-workspaces/image-catalog/blob/main/images/debian-desktop.yaml"><code>flaccid/debian-desktop:latest</code></a></td>
         <td>Full Linux desktop (TigerVNC)</td>
+        <td>container</td>
         <td>6901</td>
       </tr>
       <tr>
         <td><a href="https://github.com/kube-workspaces/image-catalog/blob/main/images/kasmweb-desktop.yaml"><code>kasmweb/desktop:1.19.0</code></a></td>
         <td>Ubuntu desktop (KasmVNC)</td>
+        <td>container</td>
         <td>6901</td>
+      </tr>
+      <tr>
+        <td><a href="https://github.com/kube-workspaces/image-catalog/blob/main/images/openvscode-server.yaml"><code>gitpod/openvscode-server:latest</code></a></td>
+        <td>Open VS Code Server</td>
+        <td>container</td>
+        <td>3000</td>
       </tr>
       <tr>
         <td><a href="https://github.com/kube-workspaces/image-catalog/blob/main/images/kasmweb-chrome.yaml"><code>kasmweb/chrome:1.19.0</code></a></td>
         <td>Chrome browser (KasmVNC)</td>
+        <td>container</td>
         <td>6901</td>
       </tr>
       <tr>
         <td><a href="https://github.com/kube-workspaces/image-catalog/blob/main/images/firefox.yaml"><code>linuxserver/firefox:latest</code></a></td>
         <td>Firefox browser (KasmVNC)</td>
+        <td>container</td>
         <td>3000</td>
       </tr>
       <tr>
         <td><a href="https://github.com/kube-workspaces/image-catalog/blob/main/images/jupyter-datascience.yaml"><code>jupyter/datascience-notebook:latest</code></a></td>
         <td>Jupyter Notebook (Data Science)</td>
+        <td>container</td>
         <td>8888</td>
       </tr>
       <tr>
         <td><a href="https://github.com/kube-workspaces/image-catalog/blob/main/images/filebrowser.yaml"><code>filebrowser/filebrowser:latest</code></a></td>
         <td>Web-based file manager</td>
+        <td>container</td>
         <td>80</td>
       </tr>
     </tbody>
