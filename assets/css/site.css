@@ -929,3 +929,17 @@
       font-size: 0.85rem;
     }
     #api-redoc { background: #fff; overflow: hidden; }
+    #api-redoc { color: #24272e; }
+    #api-redoc a,
+    #api-redoc p,
+    #api-redoc li,
+    #api-redoc h1,
+    #api-redoc h2,
+    #api-redoc h3,
+    #api-redoc h4,
+    #api-redoc strong,
+    #api-redoc em {
+      color: inherit;
+    }
+    #api-redoc a { color: #2563eb; border-bottom: none; }
+    #api-redoc a:hover { color: #1d4ed8; }
