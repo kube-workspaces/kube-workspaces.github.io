@@ -83,6 +83,10 @@ jobs:
             sed -E -i 's|\(([a-z0-9-]+)\.svg\)|(/assets/docs/\1.svg)|g' *.md
             cd ..
           fi
+          # API reference: stage the vendored OpenAPI spec the same way (the
+          # api.md page loads it from /assets/docs/).
+          mkdir -p assets/docs
+          cp -f _docs/openapi3.json _docs/openapi3.yaml assets/docs/ 2>/dev/null || true
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
