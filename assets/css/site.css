@@ -942,4 +942,6 @@
       color: inherit;
     }
     #api-redoc a { color: #2563eb; border-bottom: none; }
+    #api-redoc a[download] { border-bottom: 1px solid #2563eb; }
     #api-redoc a:hover { color: #1d4ed8; }
+    #api-redoc a[download]:hover { border-bottom-color: #2563eb; }
