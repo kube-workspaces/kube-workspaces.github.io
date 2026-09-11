@@ -15,7 +15,7 @@
 
 {% include nav.html %}
 
-<div class="docs-layout">
+<div class="docs-layout{% if page.slug == 'api' %} docs-layout--full{% endif %}">
   <aside class="docs-sidebar">
     <div class="docs-sidebar-head">
       <a href="/docs/" class="docs-home-link">Documentation</a>

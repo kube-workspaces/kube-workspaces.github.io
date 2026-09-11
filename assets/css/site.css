@@ -901,3 +901,31 @@
       .docs-sidebar { position: static; flex: none; width: 100%; }
       .docs-content { padding: 1.75rem 1.25rem; }
     }
+
+    /* API reference: ReDoc rendered full-bleed below the nav (no docs
+       sidebar). docs/api.md lives in the deploy repo; the docs build applies
+       docs-layout--full when the page slug is 'api'. */
+    .docs-layout--full { max-width: none; gap: 0; padding: 0; align-items: stretch; }
+    .docs-layout--full .docs-sidebar { display: none; }
+    .docs-layout--full .docs-content-wrap { width: 100%; }
+    .docs-layout--full .docs-content {
+      max-width: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      overflow: visible;
+    }
+    .docs-layout--full .docs-content::before { display: none; }
+    .docs-layout--full .docs-content h1 { display: none; }
+    .api-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    #api-redoc { background: #fff; overflow: hidden; }
