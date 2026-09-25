@@ -9,7 +9,7 @@
   <title>Kube Workspaces — Cloud-native workspaces for Kubernetes</title>
   <meta name="description" content="Browser-accessible development environments running as pods in your Kubernetes cluster. Open source, no database required." />
   <meta property="og:title" content="Kube Workspaces" />
-  <meta property="og:description" content="Cloud-native workspace platform for Kubernetes. Browser-based dev environments, optional OIDC auth, Helm/Kustomize/ArgoCD deploy." />
+  <meta property="og:description" content="Cloud-native workspace platform for Kubernetes. Browser-based dev environments, optional OIDC or local auth, Helm/Kustomize/ArgoCD deploy." />
   <meta property="og:image" content="https://kube-workspaces.github.io/assets/logo.png" />
   <meta property="og:url" content="https://kubeworkspaces.io" />
   <meta name="twitter:card" content="summary" />
@@ -32,7 +32,7 @@
   <h1>Browser-accessible workspaces<br>on <span>Kubernetes</span></h1>
   <p>
     Kube Workspaces runs development environments as containers or full VMs in
-    your cluster — with a web UI, optional OIDC auth, reverse proxy, and no
+    your cluster — with a web UI, optional OIDC or local auth, reverse proxy, and no
     database required.
   </p>
   <div class="hero-actions">
@@ -92,7 +92,7 @@
         <line x1="32" y1="472" x2="72" y2="472" stroke="#7b96ff" stroke-width="1.6" marker-end="url(#arr)"/>
         <text x="82" y="476" font-size="10" fill="var(--muted)">Data / API</text>
         <line x1="32" y1="492" x2="72" y2="492" stroke="#b07bff" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#arr-p)"/>
-        <text x="82" y="496" font-size="10" fill="var(--muted)">Auth (OIDC)</text>
+        <text x="82" y="496" font-size="10" fill="var(--muted)">Auth (OIDC / local)</text>
         <line x1="32" y1="512" x2="72" y2="512" stroke="#7b96ff" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#arr)"/>
         <text x="82" y="516" font-size="10" fill="var(--muted)">Proxy traffic</text>
         <line x1="32" y1="532" x2="72" y2="532" stroke="#5b6377" stroke-width="1.4" marker-end="url(#arr-g)"/>
@@ -253,8 +253,8 @@
         <div class="feature-icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
         </div>
-        <h3>Optional OIDC Auth</h3>
-        <p>Auth is off by default. When enabled, supports Dex, Google, Okta, Auth0, or any OIDC provider.</p>
+        <h3>Flexible Auth: OIDC or Local</h3>
+        <p>Auth is off by default. Use built-in local username/password logins, Dex, Google, Okta, Auth0, or any OIDC provider — or both together.</p>
       </div>
 
       <div class="feature-card">
@@ -404,7 +404,7 @@
   </div>
 
   <p style="margin-top:1.5rem;text-align:center;color:var(--muted);font-size:0.875rem;">
-    See the <a href="https://github.com/kube-workspaces/deploy/blob/main/README.md" style="color:var(--accent-mid);">full deployment guide</a> for production setup, OIDC auth, and ingress configuration.
+    See the <a href="https://github.com/kube-workspaces/deploy/blob/main/README.md" style="color:var(--accent-mid);">full deployment guide</a> for production setup, OIDC or local auth, and ingress configuration.
   </p>
 </section>
 
@@ -430,7 +430,7 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14.25 9.75L16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z"/></svg>
           <h3>api</h3>
         </div>
-        <p>REST API service (Goa v3) — workspace CRUD, volumes, images, OIDC auth, admin endpoints, OpenAPI spec.</p>
+        <p>REST API service (Goa v3) — workspace CRUD, volumes, images, auth (OIDC + local passwords), admin endpoints, OpenAPI spec.</p>
         <span class="repo-lang"><span class="lang-dot" style="background:#00ADD8;"></span>Go</span>
       </a>
 

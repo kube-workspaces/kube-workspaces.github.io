@@ -9,7 +9,7 @@ This repository hosts the [Kube Workspaces](https://kubeworkspaces.io) website.
 Cloud-native workspace platform for Kubernetes:
 
 - Browser-based dev environments
-- Web UI with optional OIDC auth (Dex, Google, Okta, Auth0, or any OIDC provider)
+- Web UI with optional auth: built-in local username/password logins, or OIDC (Dex, Google, Okta, Auth0, or any OIDC provider) — or both together
 - Reverse proxy, no database required
 - Deploy with Helm, Kustomize, or ArgoCD
 - Images published to `ghcr.io/kube-workspaces/*`
